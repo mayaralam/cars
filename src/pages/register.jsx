@@ -2,7 +2,6 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
 export default function Register() {
   const navigate = useNavigate();
   const validationSchema = yup.object({

@@ -11,12 +11,10 @@ import item7 from "../assets/item7.jpg";
 import item8 from "../assets/item8.jpg";
 import item9 from "../assets/item9.png";
 import Footer from "../components/footer";
-
 export default function Shop() {
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
-
   const products = [
     { id: 1, title: "حامل هاتف مغناطيسي", price: 65, image: item2 },
     { id: 2, title: "مصابيح أمامية LED", price: 950, image: item3 },
@@ -28,30 +26,22 @@ export default function Shop() {
     { id: 8, title: "فلتر زيت متطور", price: 85, image: item9 },
     { id: 9, title: "واقي شمس للزجاج الأمامي", price: 50, image: item8 },
   ];
-
   const addToCart = (productIndex) => {
     const selectedProduct = products[productIndex];
     let newCart = [...cart];
-
-    // دور بالـ id عشان نتأكد إذا المنتج موجود
     const existingProductIndex = newCart.findIndex(
       (item) => item.id === selectedProduct.id
     );
-
     if (existingProductIndex !== -1) {
-      // لو موجود نزود الكمية
       newCart[existingProductIndex].qty += 1;
       toast.success("تم زيادة الكمية في السلة!");
     } else {
-      // لو مش موجود نضيفه كمنتج جديد
       newCart.push({ ...selectedProduct, qty: 1 });
       toast.success("تمت الإضافة إلى السلة!");
     }
-
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
   };
-
   return (
     <>
       <Nav />
@@ -62,7 +52,6 @@ export default function Shop() {
           نوفر لك أفضل المنتجات بأسعار تنافسية
         </p>
       </section>
-
       <section className="container mx-auto py-12 px-6 text-right">
         <h2 className="text-2xl font-bold mb-12">منتجاتنا المميزة</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -78,7 +67,9 @@ export default function Shop() {
                   className="w-full h-80 object-cover transform transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-lg font-bold mb-1 text-right">{item.title}</h3>
+              <h3 className="text-lg font-bold mb-1 text-right">
+                {item.title}
+              </h3>
               <p className="text-blue-600 mt-1 text-right">ريال {item.price}</p>
               <button
                 onClick={() => addToCart(index)}
@@ -90,7 +81,6 @@ export default function Shop() {
           ))}
         </div>
       </section>
-
       <Footer />
     </>
   );
