@@ -5,34 +5,29 @@ import { FaShoppingCart } from "react-icons/fa";
 import Nav from "../components/nav";
 import { toast } from "react-hot-toast";
 import Footer from "../components/footer";
-
 export default function CartPage() {
   const handleBooking = () => {
     toast.success("تم إتمام طلبك بنجاح!");
   };
-
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       const parsedCart = JSON.parse(savedCart).map((item) => ({
         ...item,
-        price: Number(item.price) || 0, // استخدم price بدل views
+        price: Number(item.price) || 0, 
         qty: Number(item.qty) || 1,
       }));
       setCart(parsedCart);
     }
   }, []);
-
   const subtotal = cart.reduce(
     (acc, item) => acc + (Number(item.price) || 0) * (Number(item.qty) || 0),
     0
   );
   const deliveryFee = 25;
   const total = subtotal + deliveryFee;
-
   const updateQty = (index, delta) => {
     const newCart = [...cart];
     const newQty = newCart[index].qty + delta;
@@ -42,14 +37,12 @@ export default function CartPage() {
       localStorage.setItem("cart", JSON.stringify(newCart));
     }
   };
-
   const removeItem = (index) => {
     const newCart = cart.filter((_, i) => i !== index);
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
     toast.success("تم حذف المنتج من السلة");
   };
-
   return (
     <>
       <Nav />
@@ -67,7 +60,6 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-
       <div className="container mx-auto mt-20 px-4 text-right">
         <div className="py-6">
           <div className="flex flex-col md:flex-row gap-20 pt-4 w-full max-w-6xl mx-auto mb-12">
@@ -97,7 +89,6 @@ export default function CartPage() {
                 </div>
               </div>
             )}
-
             <div className="flex-1 flex flex-col gap-4">
               {cart.length === 0 ? (
                 <div className="flex gap-3 justify-center">
@@ -107,7 +98,7 @@ export default function CartPage() {
               ) : (
                 cart.map((product, index) => (
                   <div
-                    key={product.id} // استخدم id بدل index
+                    key={product.id} 
                     className="bg-white dark:bg-black rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between items-center"
                   >
                     <img
@@ -136,7 +127,6 @@ export default function CartPage() {
                   </div>
                 ))
               )}
-
               <div className="border border-blue-300 bg-blue-50 rounded-md p-4">
                 <h2 className="text-blue-700 font-bold mb-2">
                   معلومات التوصيل
