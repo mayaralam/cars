@@ -5,8 +5,6 @@ import toast from "react-hot-toast";
 
 export default function Register() {
   const navigate = useNavigate();
-
-  // ✅ مخطط التحقق (أسماء الحقول موحدة)
   const validationSchema = yup.object({
     username: yup.string().min(3, "الحد الأدنى 3 أحرف").required("مطلوب"),
     email: yup.string().email("البريد غير صالح").required("مطلوب"),
@@ -20,8 +18,6 @@ export default function Register() {
       .matches(/^[0-9]{10,15}$/, "أدخل رقم هاتف صحيح")
       .required("مطلوب"),
   });
-
-  // ✅ الإرسال (تخزين القيم بعد توحيد الأسماء)
   const handleSubmit = (values, { resetForm }) => {
     const newUser = {
       username: values.username,
@@ -29,7 +25,6 @@ export default function Register() {
       password: values.password,
       phone: values.phone,
     };
-
     const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
     existingUsers.push(newUser);
     localStorage.setItem("users", JSON.stringify(existingUsers));
@@ -38,7 +33,6 @@ export default function Register() {
     resetForm();
     navigate("/login");
   };
-
   return (
     <section className="min-h-screen flex items-center justify-center bg-blue-50 dark:bg-blue-900 px-4 py-12">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 relative overflow-hidden text-right">
@@ -53,7 +47,6 @@ export default function Register() {
               سجل الآن واحصل على أقوى العروض
             </p>
           </div>
-
           <Formik
             initialValues={{
               username: "",
@@ -67,9 +60,11 @@ export default function Register() {
           >
             {() => (
               <Form className="space-y-4">
-                {/* الاسم الكامل */}
                 <div>
-                  <label htmlFor="username" className="block mb-1 font-semibold">
+                  <label
+                    htmlFor="username"
+                    className="block mb-1 font-semibold"
+                  >
                     الاسم الكامل
                   </label>
                   <Field
@@ -86,8 +81,6 @@ export default function Register() {
                     className="text-red-600 text-sm mt-1"
                   />
                 </div>
-
-                {/* البريد الإلكتروني */}
                 <div>
                   <label htmlFor="email" className="block mb-1 font-semibold">
                     البريد الإلكتروني
@@ -106,8 +99,6 @@ export default function Register() {
                     className="text-red-600 text-sm mt-1"
                   />
                 </div>
-
-                {/* رقم الهاتف */}
                 <div>
                   <label htmlFor="phone" className="block mb-1 font-semibold">
                     رقم الهاتف
@@ -126,10 +117,11 @@ export default function Register() {
                     className="text-red-600 text-sm mt-1"
                   />
                 </div>
-
-                {/* كلمة المرور */}
                 <div>
-                  <label htmlFor="password" className="block mb-1 font-semibold">
+                  <label
+                    htmlFor="password"
+                    className="block mb-1 font-semibold"
+                  >
                     كلمة المرور
                   </label>
                   <Field
@@ -146,8 +138,6 @@ export default function Register() {
                     className="text-red-600 text-sm mt-1"
                   />
                 </div>
-
-                {/* تأكيد كلمة المرور */}
                 <div>
                   <label
                     htmlFor="confirmPassword"
@@ -169,8 +159,6 @@ export default function Register() {
                     className="text-red-600 text-sm mt-1"
                   />
                 </div>
-
-                {/* زر الإنشاء */}
                 <button
                   type="submit"
                   className="w-full cursor-pointer bg-blue-700 text-white py-2 rounded font-semibold hover:bg-blue-800 transition"
@@ -180,7 +168,6 @@ export default function Register() {
               </Form>
             )}
           </Formik>
-
           <p className="mt-6 text-sm text-center">
             لديك حساب بالفعل؟{" "}
             <a
